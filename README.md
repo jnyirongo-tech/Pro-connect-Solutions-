@@ -1,23 +1,1965 @@
-# 🌐 Pro-connect Solutions Website
+        // Payment and simple services system
+        let payments = [];
+        let currentPayment = null;
 
-Welcome to the official website repository for **Pro-connect Solutions** – “Connecting People, Ideas, and Solutions.”
+        // Purchase service function
+        function purchaseService(serviceId, price) {
+            const serviceName = getServiceName(serviceId);
+            const paymentRef = 'PC' + Date.now().toString().slice(-8);
+            <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro-connect Solutions Limited - Connecting People, Ideas, and Solutions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-## 🚀 About the Project
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
 
-This is a responsive, lightweight website built using HTML, CSS, and JavaScript to showcase the services, mission, and contact details of Pro-connect Solutions.
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-## 📁 Project Structure
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
 
-```plaintext
-├── index.html             # Main homepage file with navigation and landing sections
-├── about.html             # Page detailing the company's mission and background
-├── services.html          # Lists all the services offered by Pro-connect
-├── contact.html           # Contact form and company address
-├── style.css              # Global styling for the entire site
-├── scripts.js             # JavaScript file for interactivity (if used)
-├── /assets
-│   ├── /images            # All website images and logos
-│   └── /icons             # Icon files (if any)
-├── /fonts                 # Custom fonts used in the site
-├── .gitignore             # Git ignored files/folders
-└── README.md              # You're here! Project overview and structure
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ecf0f1;
+        }
+
+        .mobile-menu {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2c3e50;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .service-list {
+            list-style: none;
+        }
+
+        .service-list li {
+            padding: 0.5rem 0;
+            color: #666;
+        }
+
+        .service-list li:before {
+            content: "✓";
+            color: #27ae60;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* Team Section */
+        .team {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .team-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+            background: #2c3e50;
+            color: white;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .contact-item {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a252f;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Profile Dashboard */
+        .dashboard {
+            display: none;
+            padding: 100px 0 50px;
+        }
+
+        .dashboard-header {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .dashboard-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-completed {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            background: #e9ecef;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: #3498db;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        /* Live Chat Widget */
+        .chat-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            height: 400px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 3000;
+            display: none;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-body {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .chat-input {
+            padding: 1rem;
+            border-top: 1px solid #ddd;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .chat-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 3001;
+        }
+
+        .chat-message {
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border-radius: 5px;
+            max-width: 80%;
+        }
+
+        .chat-message.bot {
+            background: #e3f2fd;
+            align-self: flex-start;
+        }
+
+        .chat-message.user {
+            background: #3498db;
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+
+        /* Simple Services */
+        .simple-services {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .simple-service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .simple-service-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #e74c3c);
+        }
+
+        .price-tag {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            display: inline-block;
+        }
+
+        .instant-badge {
+            background: #27ae60;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        /* Payment Modal */
+        .payment-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .payment-step {
+            text-align: center;
+            flex: 1;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin: 0 0.5rem;
+        }
+
+        .payment-step.active {
+            background: #3498db;
+            color: white;
+        }
+
+        .payment-step.completed {
+            background: #27ae60;
+            color: white;
+        }
+
+        .payment-instructions {
+            background: #fff3cd;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border-left: 4px solid #ffc107;
+        }
+
+        .payment-verification {
+            background: #d4edda;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border-left: 4px solid #28a745;
+            display: none;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .testimonial-card {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            margin-bottom: 2rem;
+        }
+
+        .testimonial-rating {
+            color: #ffd700;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .faq-item {
+            background: #f8f9fa;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .faq-question:hover {
+            background: #e9ecef;
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-answer.active {
+            max-height: 200px;
+            padding: 1.5rem;
+        }
+
+        /* Admin Dashboard */
+        .admin-dashboard {
+            display: none;
+            padding: 100px 0 50px;
+            background: #f8f9fa;
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-calculator {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .price-display {
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .price-display h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .document-access {
+            background: #d4edda;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            border-left: 4px solid #28a745;
+        }
+
+        .access-denied {
+            background: #f8d7da;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            border-left: 4px solid #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">🌐 Pro-connect Solutions</div>
+                <nav>
+                    <ul id="navMenu">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#simple-services">Instant Services</a></li>
+                        <li><a href="#pricing-calculator">Pricing</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#team">Team</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#" onclick="openModal('loginModal')">Login</a></li>
+                    </ul>
+                    <button class="mobile-menu" onclick="toggleMobileMenu()">☰</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="container">
+                <h1>Connecting People, Ideas, and Solutions</h1>
+                <p>Your One-Stop Consultancy Hub in Chipata, Zambia</p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn-primary" onclick="openModal('requestServiceModal')">Request Service</a>
+                    <a href="#" class="btn btn-secondary" onclick="openModal('registerModal')">Create Profile</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="services">
+            <div class="container">
+                <h2 class="section-title">Our Core Services</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">👥</div>
+                        <h3>Human Resource Consultancy</h3>
+                        <ul class="service-list">
+                            <li>HR Policy Development & Review</li>
+                            <li>Recruitment & Talent Acquisition</li>
+                            <li>Job Descriptions & Performance Management</li>
+                            <li>HR Compliance & Audit Support</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">💰</div>
+                        <h3>Financial & Tax Consultancy</h3>
+                        <ul class="service-list">
+                            <li>Bookkeeping & Financial Statements</li>
+                            <li>ZRA TPIN Registration & Tax Returns</li>
+                            <li>Payroll Services</li>
+                            <li>Budgeting & Financial Forecasting</li>
+                            <li>SME Tax Advisory</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">🚀</div>
+                        <h3>Career & Professional Development</h3>
+                        <ul class="service-list">
+                            <li>CV & Cover Letter Writing</li>
+                            <li>LinkedIn Profile Optimization</li>
+                            <li>Interview Coaching</li>
+                            <li>Career Counseling</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">📊</div>
+                        <h3>Business & Proposal Writing</h3>
+                        <ul class="service-list">
+                            <li>Business Plans</li>
+                            <li>Grant & Project Proposals</li>
+                            <li>Strategic Plans & Concept Notes</li>
+                            <li>Company Profiles & Pitch Decks</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">🎓</div>
+                        <h3>Trainings & Capacity Building</h3>
+                        <ul class="service-list">
+                            <li>Public Speaking & Job Readiness</li>
+                            <li>Entrepreneurship & Innovation Workshops</li>
+                            <li>Monitoring & Evaluation Basics</li>
+                            <li>Report Writing & Data Use</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">💻</div>
+                        <h3>Digital & Administrative Support</h3>
+                        <ul class="service-list">
+                            <li>Document Formatting & Proofreading</li>
+                            <li>Basic Graphic Design</li>
+                            <li>Virtual Assistant Services</li>
+                            <li>Online Application Assistance</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">🎓</div>
+                        <h3>Academic & Research Support</h3>
+                        <ul class="service-list">
+                            <li>Research Proposal Development</li>
+                            <li>Dissertation/Thesis Support</li>
+                            <li>Referencing (APA, Harvard, etc.)</li>
+                            <li>Academic Essay Editing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Simple Services Section -->
+        <section id="simple-services" class="simple-services">
+            <div class="container">
+                <h2 class="section-title">Instant Services - Pay & Download</h2>
+                <div class="services-grid">
+                    <div class="simple-service-card">
+                        <div class="instant-badge">⚡ Instant Download</div>
+                        <h3>Professional CV Template</h3>
+                        <p>Modern, ATS-friendly CV template with instructions</p>
+                        <div class="price-tag">K50</div>
+                        <button class="btn btn-primary" onclick="purchaseService('cv-template', 50)">Buy Now - Airtel Money</button>
+                        <div id="cv-template-access" class="document-access" style="display: none;">
+                            <h4>✅ Payment Confirmed!</h4>
+                            <p>Your CV template is ready for download:</p>
+                            <a href="#" class="btn btn-secondary" onclick="downloadDocument('cv-template')">Download CV Template</a>
+                        </div>
+                    </div>
+
+                    <div class="simple-service-card">
+                        <div class="instant-badge">⚡ Instant Download</div>
+                        <h3>Business Plan Template</h3>
+                        <p>Complete business plan template with financial projections</p>
+                        <div class="price-tag">K150</div>
+                        <button class="btn btn-primary" onclick="purchaseService('business-plan', 150)">Buy Now - Airtel Money</button>
+                        <div id="business-plan-access" class="document-access" style="display: none;">
+                            <h4>✅ Payment Confirmed!</h4>
+                            <p>Your business plan template is ready:</p>
+                            <a href="#" class="btn btn-secondary" onclick="downloadDocument('business-plan')">Download Business Plan</a>
+                        </div>
+                    </div>
+
+                    <div class="simple-service-card">
+                        <div class="instant-badge">⚡ Instant Download</div>
+                        <h3>Job Interview Guide</h3>
+                        <p>Comprehensive guide with common questions and answers</p>
+                        <div class="price-tag">K30</div>
+                        <button class="btn btn-primary" onclick="purchaseService('interview-guide', 30)">Buy Now - Airtel Money</button>
+                        <div id="interview-guide-access" class="document-access" style="display: none;">
+                            <h4>✅ Payment Confirmed!</h4>
+                            <p>Your interview guide is ready:</p>
+                            <a href="#" class="btn btn-secondary" onclick="downloadDocument('interview-guide')">Download Interview Guide</a>
+                        </div>
+                    </div>
+
+                    <div class="simple-service-card">
+                        <div class="instant-badge">⚡ Instant Download</div>
+                        <h3>Proposal Writing Kit</h3>
+                        <p>Templates and guidelines for writing winning proposals</p>
+                        <div class="price-tag">K100</div>
+                        <button class="btn btn-primary" onclick="purchaseService('proposal-kit', 100)">Buy Now - Airtel Money</button>
+                        <div id="proposal-kit-access" class="document-access" style="display: none;">
+                            <h4>✅ Payment Confirmed!</h4>
+                            <p>Your proposal kit is ready:</p>
+                            <a href="#" class="btn btn-secondary" onclick="downloadDocument('proposal-kit')">Download Proposal Kit</a>
+                        </div>
+                    </div>
+
+                    <div class="simple-service-card">
+                        <div class="instant-badge">⚡ Instant Download</div>
+                        <h3>Financial Planning Workbook</h3>
+                        <p>Excel templates for budgeting and financial planning</p>
+                        <div class="price-tag">K80</div>
+                        <button class="btn btn-primary" onclick="purchaseService('financial-workbook', 80)">Buy Now - Airtel Money</button>
+                        <div id="financial-workbook-access" class="document-access" style="display: none;">
+                            <h4>✅ Payment Confirmed!</h4>
+                            <p>Your financial workbook is ready:</p>
+                            <a href="#" class="btn btn-secondary" onclick="downloadDocument('financial-workbook')">Download Workbook</a>
+                        </div>
+                    </div>
+
+                    <div class="simple-service-card">
+                        <div class="instant-badge">⚡ Instant Download</div>
+                        <h3>HR Policy Templates</h3>
+                        <p>Essential HR policy templates for small businesses</p>
+                        <div class="price-tag">K120</div>
+                        <button class="btn btn-primary" onclick="purchaseService('hr-templates', 120)">Buy Now - Airtel Money</button>
+                        <div id="hr-templates-access" class="document-access" style="display: none;">
+                            <h4>✅ Payment Confirmed!</h4>
+                            <p>Your HR templates are ready:</p>
+                            <a href="#" class="btn btn-secondary" onclick="downloadDocument('hr-templates')">Download HR Templates</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Service Pricing Calculator -->
+        <section id="pricing-calculator" class="services">
+            <div class="container">
+                <h2 class="section-title">Service Pricing Calculator</h2>
+                <div class="pricing-calculator">
+                    <h3>Get an Instant Quote</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="calcService">Service Type:</label>
+                            <select id="calcService" onchange="calculatePrice()">
+                                <option value="">Select Service</option>
+                                <option value="cv-writing">CV Writing</option>
+                                <option value="business-plan">Business Plan</option>
+                                <option value="proposal-writing">Proposal Writing</option>
+                                <option value="hr-consultation">HR Consultation</option>
+                                <option value="financial-advisory">Financial Advisory</option>
+                                <option value="training">Training Session</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="calcComplexity">Complexity Level:</label>
+                            <select id="calcComplexity" onchange="calculatePrice()">
+                                <option value="">Select Complexity</option>
+                                <option value="basic">Basic</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                                <option value="expert">Expert Level</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="calcUrgency">Delivery Time:</label>
+                            <select id="calcUrgency" onchange="calculatePrice()">
+                                <option value="">Select Timeframe</option>
+                                <option value="standard">Standard (7-14 days)</option>
+                                <option value="fast">Fast (3-5 days)</option>
+                                <option value="urgent">Urgent (1-2 days)</option>
+                                <option value="express">Express (Same day)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="calcPages">Number of Pages/Hours:</label>
+                            <input type="number" id="calcPages" min="1" placeholder="1" onchange="calculatePrice()">
+                        </div>
+                    </div>
+                    <div class="price-display" id="priceDisplay" style="display: none;">
+                        <h3>Estimated Price: K<span id="finalPrice">0</span></h3>
+                        <p>This is an estimate. Final price may vary based on specific requirements.</p>
+                        <button class="btn btn-secondary" onclick="openModal('requestServiceModal')">Request This Service</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="testimonials">
+            <div class="container">
+                <h2 class="section-title">What Our Clients Say</h2>
+                <div class="services-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">★★★★★</div>
+                        <p>"Pro-connect Solutions helped me create a professional CV that landed me my dream job at a mining company. Their service is excellent!"</p>
+                        <h4>- Sarah Mwanza, Mining Engineer</h4>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">★★★★★</div>
+                        <p>"The business plan they developed for my restaurant was comprehensive and helped me secure a loan from the bank. Highly recommended!"</p>
+                        <h4>- Peter Banda, Restaurant Owner</h4>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">★★★★★</div>
+                        <p>"Their HR consultancy service transformed our company's hiring process. We now have better employee retention and productivity."</p>
+                        <h4>- Grace Tembo, HR Manager</h4>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">★★★★★</div>
+                        <p>"The financial advisory service helped me understand my business finances better. My profits have increased by 30% since their consultation."</p>
+                        <h4>- James Phiri, Small Business Owner</h4>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">★★★★★</div>
+                        <p>"Professional training on public speaking boosted my confidence. I now deliver presentations with ease at work."</p>
+                        <h4>- Mary Zulu, Corporate Executive</h4>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">★★★★★</div>
+                        <p>"Their academic support helped me complete my dissertation on time. The referencing and formatting were perfect!"</p>
+                        <h4>- David Mulenga, University Student</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="faq">
+            <div class="container">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How long does it take to complete a service?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Service completion time varies by complexity and urgency. Standard services take 7-14 days, while urgent requests can be completed in 1-2 days for an additional fee.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What payment methods do you accept?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We accept Airtel Money, MTN Mobile Money, bank transfers, and cash payments. For instant digital services, we primarily use Airtel Money for automatic delivery.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Do you offer revisions on completed work?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we offer up to 2 free revisions within 7 days of delivery to ensure your complete satisfaction with our services.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Are your services confidential?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! We maintain strict confidentiality for all client information and projects. We can sign NDAs when required.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Can I get a refund if I'm not satisfied?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We offer a satisfaction guarantee. If you're not completely satisfied after revisions, we'll provide a partial refund based on the work completed.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Do you provide ongoing support after service completion?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we provide 30 days of free support after service completion for any questions or minor adjustments you might need.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Dashboard Section -->
+        <section id="admin-dashboard" class="admin-dashboard">
+            <div class="container">
+                <div class="dashboard-header">
+                    <h2>Admin Dashboard</h2>
+                    <button class="btn btn-secondary" onclick="exportData()">Export Data</button>
+                </div>
+                
+                <div class="admin-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalUsers">0</div>
+                        <p>Total Users</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalRequests">0</div>
+                        <p>Service Requests</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalRevenue">K0</div>
+                        <p>Total Revenue</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="pendingRequests">0</div>
+                        <p>Pending Requests</p>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h3>Recent Service Requests</h3>
+                        <div id="adminRequests">
+                            <p>Loading requests...</p>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>Recent Payments</h3>
+                        <div id="adminPayments">
+                            <p>Loading payments...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+            <div class="container">
+                <h2 class="section-title">Our Team</h2>
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="team-avatar">JN</div>
+                        <h3>Joseph Nyirongo</h3>
+                        <p><strong>Founder & Lead Consultant</strong></p>
+                        <p>📞 0978 560 364 / 0966 053 745</p>
+                    </div>
+
+                    <div class="team-card">
+                        <div class="team-avatar">ET</div>
+                        <h3>Edward Muloyi Tembo</h3>
+                        <p><strong>Financial Consultant</strong></p>
+                        <p>📞 0979 257 564</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2 class="section-title">Get In Touch</h2>
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <h3>Office Address</h3>
+                        <p>Citizens Commercial Building, Room 13<br>
+                        Opposite Motala (Down Shops)<br>
+                        Chipata, Zambia</p>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <h3>Phone Numbers</h3>
+                        <p>Joseph: 0978 560 364 / 0966 053 745<br>
+                        Edward: 0979 257 564</p>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <h3>Email</h3>
+                        <p>info@proconnectsolutions.com<br>
+                        services@proconnectsolutions.com</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Section (Hidden by default) -->
+        <section id="dashboard" class="dashboard">
+            <div class="container">
+                <div class="dashboard-header">
+                    <h2>Welcome to Your Dashboard</h2>
+                    <p>Manage your profile, track service requests, and access your documents.</p>
+                </div>
+
+                <div class="tab-buttons">
+                    <button class="tab-btn active" onclick="showTab('profile')">Profile</button>
+                    <button class="tab-btn" onclick="showTab('requests')">Service Requests</button>
+                    <button class="tab-btn" onclick="showTab('documents')">Documents</button>
+                </div>
+
+                <div id="profile" class="tab-content active">
+                    <div class="dashboard-card">
+                        <h3>Profile Information</h3>
+                        <div id="profileInfo">
+                            <p>Please log in to view your profile information.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="requests" class="tab-content">
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card">
+                            <h3>Active Requests</h3>
+                            <div id="activeRequests">
+                                <p>No active service requests.</p>
+                            </div>
+                        </div>
+                        <div class="dashboard-card">
+                            <h3>Request History</h3>
+                            <div id="requestHistory">
+                                <p>No previous requests.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="documents" class="tab-content">
+                    <div class="dashboard-card">
+                        <h3>Your Documents</h3>
+                        <div id="userDocuments">
+                            <p>No documents uploaded yet.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('paymentModal')">&times;</span>
+            <h2>Complete Your Payment</h2>
+            
+            <div class="payment-steps">
+                <div class="payment-step active" id="step1">
+                    <h4>1. Service</h4>
+                    <p>Select & Confirm</p>
+                </div>
+                <div class="payment-step" id="step2">
+                    <h4>2. Payment</h4>
+                    <p>Airtel Money</p>
+                </div>
+                <div class="payment-step" id="step3">
+                    <h4>3. Download</h4>
+                    <p>Get Document</p>
+                </div>
+            </div>
+
+            <div id="paymentContent">
+                <div class="payment-instructions">
+                    <h3>📱 Pay with Airtel Money</h3>
+                    <p><strong>Service:</strong> <span id="selectedService"></span></p>
+                    <p><strong>Price:</strong> K<span id="selectedPrice"></span></p>
+                    <hr>
+                    <h4>Payment Instructions:</h4>
+                    <ol>
+                        <li>Dial <strong>*115#</strong> on your Airtel phone</li>
+                        <li>Select <strong>Send Money</strong></li>
+                        <li>Enter recipient number: <strong>0978 560 364</strong></li>
+                        <li>Enter amount: <strong>K<span id="paymentAmount"></span></strong></li>
+                        <li>Enter reference: <strong><span id="paymentRef"></span></strong></li>
+                        <li>Confirm payment with your PIN</li>
+                    </ol>
+                    <p><strong>⚠️ Important:</strong> Use the exact reference number shown above for automatic processing.</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="transactionId">Transaction ID (from Airtel confirmation SMS):</label>
+                    <input type="text" id="transactionId" placeholder="Enter your transaction ID">
+                </div>
+                
+                <button class="btn btn-primary" onclick="verifyPayment()">Verify Payment</button>
+                <button class="btn btn-secondary" onclick="closeModal('paymentModal')">Cancel</button>
+            </div>
+
+            <div class="payment-verification" id="paymentVerification">
+                <h3>✅ Payment Verified!</h3>
+                <p>Your payment has been confirmed. Your document is ready for download.</p>
+                <button class="btn btn-primary" onclick="completePayment()">Complete & Download</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Chat Widget -->
+    <div id="chatWidget" class="chat-widget">
+        <div class="chat-header">
+            <h4>💬 Live Support</h4>
+            <button onclick="toggleChat()" style="background: none; border: none; color: white; font-size: 1.2rem;">×</button>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="chat-message bot">
+                <p>Hello! I'm here to help you with any questions about our services. How can I assist you today?</p>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatEnter(event)">
+            <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <button class="chat-toggle" onclick="toggleChat()">💬</button>
+        <div class="container">
+            <p>&copy; 2025 Pro-connect Solutions Limited. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2>Login to Your Account</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email:</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password:</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('registerModal')">&times;</span>
+            <h2>Create Your Profile</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="accountType">Account Type:</label>
+                    <select id="accountType" required onchange="toggleAccountFields()">
+                        <option value="">Select Account Type</option>
+                        <option value="individual">Individual</option>
+                        <option value="company">Company</option>
+                    </select>
+                </div>
+
+                <div id="individualFields" style="display: none;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name:</label>
+                            <input type="text" id="firstName">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name:</label>
+                            <input type="text" id="lastName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="nrc">NRC Number:</label>
+                        <input type="text" id="nrc">
+                    </div>
+                    <div class="form-group">
+                        <label for="profession">Profession:</label>
+                        <input type="text" id="profession">
+                    </div>
+                </div>
+
+                <div id="companyFields" style="display: none;">
+                    <div class="form-group">
+                        <label for="companyName">Company Name:</label>
+                        <input type="text" id="companyName">
+                    </div>
+                    <div class="form-group">
+                        <label for="registrationNumber">Registration Number:</label>
+                        <input type="text" id="registrationNumber">
+                    </div>
+                    <div class="form-group">
+                        <label for="industry">Industry:</label>
+                        <input type="text" id="industry">
+                    </div>
+                    <div class="form-group">
+                        <label for="companySize">Company Size:</label>
+                        <select id="companySize">
+                            <option value="">Select Size</option>
+                            <option value="1-10">1-10 employees</option>
+                            <option value="11-50">11-50 employees</option>
+                            <option value="51-200">51-200 employees</option>
+                            <option value="200+">200+ employees</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <textarea id="address" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Profile</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Request Service Modal -->
+    <div id="requestServiceModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('requestServiceModal')">&times;</span>
+            <h2>Request a Service</h2>
+            <form id="requestForm">
+                <div class="form-group">
+                    <label for="serviceCategory">Service Category:</label>
+                    <select id="serviceCategory" required>
+                        <option value="">Select Service Category</option>
+                        <option value="hr">Human Resource Consultancy</option>
+                        <option value="financial">Financial & Tax Consultancy</option>
+                        <option value="career">Career & Professional Development</option>
+                        <option value="business">Business & Proposal Writing</option>
+                        <option value="training">Trainings & Capacity Building</option>
+                        <option value="digital">Digital & Administrative Support</option>
+                        <option value="academic">Academic & Research Support</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="specificService">Specific Service:</label>
+                    <input type="text" id="specificService" required placeholder="e.g., CV Writing, Business Plan, etc.">
+                </div>
+                <div class="form-group">
+                    <label for="urgency">Urgency Level:</label>
+                    <select id="urgency" required>
+                        <option value="">Select Urgency</option>
+                        <option value="low">Low (1-2 weeks)</option>
+                        <option value="medium">Medium (3-7 days)</option>
+                        <option value="high">High (1-2 days)</option>
+                        <option value="urgent">Urgent (Same day)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="budget">Budget Range (ZMW):</label>
+                    <select id="budget" required>
+                        <option value="">Select Budget Range</option>
+                        <option value="under-500">Under K500</option>
+                        <option value="500-1000">K500 - K1,000</option>
+                        <option value="1000-2500">K1,000 - K2,500</option>
+                        <option value="2500-5000">K2,500 - K5,000</option>
+                        <option value="over-5000">Over K5,000</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="projectDescription">Project Description:</label>
+                    <textarea id="projectDescription" rows="4" required placeholder="Please describe your project requirements in detail..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="clientName">Your Name:</label>
+                    <input type="text" id="clientName" required>
+                </div>
+                <div class="form-group">
+                    <label for="clientEmail">Your Email:</label>
+                    <input type="email" id="clientEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="clientPhone">Your Phone:</label>
+                    <input type="tel" id="clientPhone" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Request</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // User data storage
+        let users = [];
+        let currentUser = null;
+        let serviceRequests = [];
+
+        // Navigation functions
+        function toggleMobileMenu() {
+            const menu = document.getElementById('navMenu');
+            menu.classList.toggle('active');
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modals = document.getElementsByClassName('modal');
+            for (let modal of modals) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            }
+        }
+
+        // Account type toggle
+        function toggleAccountFields() {
+            const accountType = document.getElementById('accountType').value;
+            const individualFields = document.getElementById('individualFields');
+            const companyFields = document.getElementById('companyFields');
+            
+            if (accountType === 'individual') {
+                individualFields.style.display = 'block';
+                companyFields.style.display = 'none';
+            } else if (accountType === 'company') {
+                individualFields.style.display = 'none';
+                companyFields.style.display = 'block';
+            } else {
+                individualFields.style.display = 'none';
+                companyFields.style.display = 'none';
+            }
+        }
+
+        // Dashboard tab functions
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-btn');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Registration form handler
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const accountType = document.getElementById('accountType').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            // Check if user already exists
+            if (users.find(user => user.email === email)) {
+                alert('User with this email already exists!');
+                return;
+            }
+            
+            // Create user object
+            const newUser = {
+                id: Date.now(),
+                accountType: accountType,
+                email: email,
+                password: password,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+                createdAt: new Date().toISOString()
+            };
+            
+            // Add type-specific fields
+            if (accountType === 'individual') {
+                newUser.firstName = document.getElementById('firstName').value;
+                newUser.lastName = document.getElementById('lastName').value;
+                newUser.nrc = document.getElementById('nrc').value;
+                newUser.profession = document.getElementById('profession').value;
+            } else if (accountType === 'company') {
+                newUser.companyName = document.getElementById('companyName').value;
+                newUser.registrationNumber = document.getElementById('registrationNumber').value;
+                newUser.industry = document.getElementById('industry').value;
+                newUser.companySize = document.getElementById('companySize').value;
+            }
+            
+            users.push(newUser);
+            alert('Profile created successfully! You can now log in.');
+            closeModal('registerModal');
+            document.getElementById('registerForm').reset();
+        });
+
+        // Login form handler
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                currentUser = user;
+                alert('Login successful!');
+                closeModal('loginModal');
+                showDashboard();
+                updateNavigation();
+            } else {
+                alert('Invalid email or password!');
+            }
+        });
+
+        // Service request form handler
+        document.getElementById('requestForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const request = {
+                id: Date.now(),
+                serviceCategory: document.getElementById('serviceCategory').value,
+                specificService: document.getElementById('specificService').value,
+                urgency: document.getElementById('urgency').value,
+                budget: document.getElementById('budget').value,
+                projectDescription: document.getElementById('projectDescription').value,
+                clientName: document.getElementById('clientName').value,
+                clientEmail: document.getElementById('clientEmail').value,
+                clientPhone: document.getElementById('clientPhone').value,
+                status: 'pending',
+                submittedAt: new Date().toISOString(),
+                userId: currentUser ? currentUser.id : null
+            };
+            
+            serviceRequests.push(request);
+            alert('Service request submitted successfully! We will contact you soon.');
+            closeModal('requestServiceModal');
+            document.getElementById('requestForm').reset();
+            
+            if (currentUser) {
+                updateDashboard();
+            }
+        });
+
+        // Show dashboard
+        function showDashboard() {
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('services').style.display = 'none';
+            document.getElementById('team').style.display = 'none';
+            document.getElementById('contact').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            
+            updateProfileInfo();
+            updateServiceRequests();
+        }
+
+        // Update navigation for logged-in user
+        function updateNavigation() {
+            const navMenu = document.getElementById('navMenu');
+            const loginLink = navMenu.querySelector('a[onclick="openModal(\'loginModal\')"]');
+            
+            if (currentUser) {
+                loginLink.textContent = 'Dashboard';
+                loginLink.onclick = showDashboard;
+                
+                // Add logout option
+                const logoutLink = document.createElement('li');
+                logoutLink.innerHTML = '<a href="#" onclick="logout()">Logout</a>';
+                navMenu.appendChild(logoutLink);
+            }
+        }
+
+        // Logout function
+        function logout() {
+            currentUser = null;
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('home').style.display = 'block';
+            document.getElementById('services').style.display = 'block';
+            document.getElementById('team').style.display = 'block';
+            document.getElementById('contact').style.display = 'block';
+            
+            // Reset navigation
+            location.reload();
+        }
+
+        // Update profile info
+        function updateProfileInfo() {
+            const profileInfo = document.getElementById('profileInfo');
+            
+            if (currentUser) {
+                let profileHTML = `
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                        <div>
+                            <h4>Contact Information</h4>
+                            <p><strong>Email:</strong> ${currentUser.email}</p>
+                            <p><strong>Phone:</strong> ${currentUser.phone}</p>
+                            <p><strong>Address:</strong> ${currentUser.address}</p>
+                        </div>
+                `;
+                
+                if (currentUser.accountType === 'individual') {
+                    profileHTML += `
+                        <div>
+                            <h4>Personal Information</h4>
+                            <p><strong>Name:</strong> ${currentUser.firstName} ${currentUser.lastName}</p>
+                            <p><strong>NRC:</strong> ${currentUser.nrc}</p>
+                            <p><strong>Profession:</strong> ${currentUser.profession}</p>
+                        </div>
+                    `;
+                } else if (currentUser.accountType === 'company') {
+                    profileHTML += `
+                        <div>
+                            <h4>Company Information</h4>
+                            <p><strong>Company:</strong> ${currentUser.companyName}</p>
+                            <p><strong>Registration:</strong> ${currentUser.registrationNumber}</p>
+                            <p><strong>Industry:</strong> ${currentUser.industry}</p>
+                            <p><strong>Size:</strong> ${currentUser.companySize}</p>
+                        </div>
+                    `;
+                }
+                
+                profileHTML += `
+                        <div>
+                            <h4>Account Details</h4>
+                            <p><strong>Account Type:</strong> ${currentUser.accountType}</p>
+                            <p><strong>Member Since:</strong> ${new Date(currentUser.createdAt).toLocaleDateString()}</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="editProfile()" style="margin-top: 1rem;">Edit Profile</button>
+                `;
+                
+                profileInfo.innerHTML = profileHTML;
+            }
+        }
+
+        // Update service requests
+        function updateServiceRequests() {
+            const userRequests = serviceRequests.filter(req => req.userId === currentUser.id);
+            const activeRequests = userRequests.filter(req => req.status === 'pending' || req.status === 'in-progress');
+            const completedRequests = userRequests.filter(req => req.status === 'completed');
+            
+            // Update active requests
+            const activeRequestsDiv = document.getElementById('activeRequests');
+            if (activeRequests.length > 0) {
+                activeRequestsDiv.innerHTML = activeRequests.map(req => `
+                    <div style="border: 1px solid #ddd; padding: 1rem; margin-bottom: 1rem; border-radius: 5px;">
+                        <h4>${req.specificService}</h4>
+                        <p><strong>Category:</strong> ${req.serviceCategory}</p>
+                        <p><strong>Urgency:</strong> ${req.urgency}</p>
+                        <p><strong>Budget:</strong> ${req.budget}</p>
+                        <p><strong>Status:</strong> <span class="status-badge status-${req.status}">${req.status}</span></p>
+                        <p><strong>Submitted:</strong> ${new Date(req.submittedAt).toLocaleDateString()}</p>
+                        <p><strong>Description:</strong> ${req.projectDescription}</p>
+                    </div>
+                `).join('');
+            } else {
+                activeRequestsDiv.innerHTML = '<p>No active service requests.</p>';
+            }
+            
+            // Update request history
+            const requestHistoryDiv = document.getElementById('requestHistory');
+            if (completedRequests.length > 0) {
+                requestHistoryDiv.innerHTML = completedRequests.map(req => `
+                    <div style="border: 1px solid #ddd; padding: 1rem; margin-bottom: 1rem; border-radius: 5px;">
+                        <h4>${req.specificService}</h4>
+                        <p><strong>Category:</strong> ${req.serviceCategory}</p>
+                        <p><strong>Status:</strong> <span class="status-badge status-completed">Completed</span></p>
+                        <p><strong>Completed:</strong> ${new Date(req.submittedAt).toLocaleDateString()}</p>
+                    </div>
+                `).join('');
+            } else {
+                requestHistoryDiv.innerHTML = '<p>No completed requests.</p>';
+            }
+        }
+
+        // Edit profile function
+        function editProfile() {
+            alert('Profile editing feature coming soon!');
+        }
+
+        // Update dashboard
+        function updateDashboard() {
+            if (currentUser) {
+                updateProfileInfo();
+                updateServiceRequests();
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Initialize with sample data for demonstration
+        function initializeSampleData() {
+            // Sample users
+            users.push({
+                id: 1,
+                accountType: 'individual',
+                email: 'john.doe@example.com',
+                password: 'password123',
+                firstName: 'John',
+                lastName: 'Doe',
+                nrc: '123456/78/9',
+                profession: 'Software Developer',
+                phone: '0978123456',
+                address: 'Chipata, Zambia',
+                createdAt: new Date().toISOString()
+            });
+
+            users.push({
+                id: 2,
+                accountType: 'company',
+                email: 'info@techcorp.com',
+                password: 'company123',
+                companyName: 'Tech Corp Limited',
+                registrationNumber: 'TC2024001',
+                industry: 'Information Technology',
+                companySize: '11-50',
+                phone: '0979123456',
+                address: 'Chipata Business District, Zambia',
+                createdAt: new Date().toISOString()
+            });
+
+            // Sample service requests
+            serviceRequests.push({
+                id: 1,
+                serviceCategory: 'career',
+                specificService: 'CV Writing',
+                urgency: 'medium',
+                budget: '500-1000',
+                projectDescription: 'Need a professional CV for job applications',
+                clientName: 'John Doe',
+                clientEmail: 'john.doe@example.com',
+                clientPhone: '0978123456',
+                status: 'pending',
+                submittedAt: new Date().toISOString(),
+                userId: 1
+            });
+
+            serviceRequests.push({
+                id: 2,
+                serviceCategory: 'business',
+                specificService: 'Business Plan',
+                urgency: 'high',
+                budget: '2500-5000',
+                projectDescription: 'Comprehensive business plan for a tech startup',
+                clientName: 'Tech Corp Limited',
+                clientEmail: 'info@techcorp.com',
+                clientPhone: '0979123456',
+                status: 'completed',
+                submittedAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+                userId: 2
+            });
+        }
+
+        // Initialize sample data on page load
+        initializeSampleData();
+
+        // Add some interactive animations
+        function addInteractiveEffects() {
+            // Add hover effects to service cards
+            const serviceCards = document.querySelectorAll('.service-card');
+            serviceCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Add click effects to buttons
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            });
+        }
+
+        // Initialize interactive effects
+        addInteractiveEffects();
+
+        // Add contact form functionality
+        function addContactForm() {
+            const contactSection = document.getElementById('contact');
+            const contactForm = document.createElement('div');
+            contactForm.innerHTML = `
+                <div style="margin-top: 3rem; background: white; padding: 2rem; border-radius: 10px; color: #333;">
+                    <h3>Send us a Message</h3>
+                    <form id="contactForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contactName">Name:</label>
+                                <input type="text" id="contactName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactEmail">Email:</label>
+                                <input type="email" id="contactEmail" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactSubject">Subject:</label>
+                            <input type="text" id="contactSubject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactMessage">Message:</label>
+                            <textarea id="contactMessage" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            `;
+            contactSection.querySelector('.container').appendChild(contactForm);
+
+            // Handle contact form submission
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for your message! We will get back to you soon.');
+                this.reset();
+            });
+        }
+
+        // Add contact form
+        addContactForm();
+    </script>
+</body>
+</html>
